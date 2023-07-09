@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ETICARET.DAL\ETICARET.DAL.csproj" />
+    <ProjectReference Include="..\ETICARET.ENTITY\ETICARET.ENTITY.csproj" />
   </ItemGroup>
 
 </Project>

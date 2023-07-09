@@ -1,0 +1,19 @@
+﻿@model IEnumerable<ETICARET.ENTITY.Product>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    @foreach (var item in Model)
+    {
+        <h1>@item.Name</h1>
+    }
+</body>
+</html>

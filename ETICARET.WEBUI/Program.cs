@@ -1,7 +1,20 @@
+using ETICARET.BLL.Abstract;
+using ETICARET.BLL.Concrete;
+using ETICARET.DAL.Abstract;
+using ETICARET.DAL.Concrete.EFCore;
+using ETICARET.DAL.Concrete.Memory;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+// Dependency Injection
+builder.Services.AddScoped<IProductDal, MemoryProductDal>();
+builder.Services.AddScoped<IProductService, ProductManager>();
+
+//MVC Mimarisini Tanýmladým.
+builder.Services.AddMvc().SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Latest);
 
 var app = builder.Build();
 
@@ -22,5 +35,10 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapRazorPages();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}");
+});
 
 app.Run();
