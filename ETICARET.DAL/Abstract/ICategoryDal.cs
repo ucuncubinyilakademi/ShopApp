@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace ETICARET.DAL.Abstract
 {
-    public interface IProductDal:IRepository<Product>
+    public interface ICategoryDal:IRepository<Category>
     {
-        IEnumerable<Product> GetPopularProducts();
+       
     }
 }
