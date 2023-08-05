@@ -1,0 +1,11 @@
+﻿@model List<Comment>
+
+@foreach (var item in Model)
+{
+    <div class="d-flex">
+        <div class="flex-grow-1 ms-12">
+            <h6 class="col-md-12">John Carter <small class="text-muted">@item.CreateOn.ToString("dddd, dd MM yyyy")</small></h6>
+            <p>@item.Text</p>
+        </div>
+    </div>
+}

@@ -1,0 +1,75 @@
+﻿@model ProductDetailsModel
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="row">
+            <div class="col-md-12">
+                <img src="~/img/@Model.Product.Images[0].ImageUrl" alt="@Model.Product.Name" class="img-fluid" id="imageBox" />
+            </div>
+        </div>
+        <div class="row">
+            @for (var i = 0; i < Model.Product.Images.Count; i++)
+            {
+                <div class="col-3 product-small-img">
+                    <img src="~/img/@Model.Product.Images[i].ImageUrl" alt="@Model.Product.Name" class="img-fluid" style="display:block" onclick=myFunction(this) />
+                </div>
+            }
+
+        </div>
+
+    </div>
+    <div class="col-md-9">
+        <h1 class="mb-3">
+            @Model.Product.Name
+        </h1>
+        <hr />
+        @foreach (var category in Model.Categories)
+        {
+            <a href="#" class="btn btn-link p-0 mb-3">@category.Name</a>
+        }
+        <div class="col-md-3">
+            <h4 class="text-primary mb-3">
+                <i class="fa-solid fa-turkish-lira-sign"></i> @Model.Product.Price
+            </h4>
+            <button type="submit" class="btn btn-primary btn-lg">Add To Cart</button>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Açıklama</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Yorumlar</button>
+            </li>
+
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">@Model.Product.Description</div>
+            <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+                @foreach (var item in Model.Comments)
+                {
+                    <div class="d-flex">
+                        <div class="flex-grow-1 ms-12">
+                            <h6 class="col-md-12">John Carter <small class="text-muted">@item.CreateOn.ToString("dddd, dd MM yyyy")</small></h6>
+                            <p>@item.Text</p>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function myFunction(smallImg) {
+        var fullImg = document.getElementById("imageBox");
+        fullImg.src = smallImg.src
+    }
+</script>
