@@ -70,6 +70,8 @@ builder.Services.AddScoped<ICategoryDal, EfCoreCategoryDal>();
 builder.Services.AddScoped<ICategoryService, CategoryManager>();
 builder.Services.AddScoped<ICommentDal, EfCoreCommentDal>();
 builder.Services.AddScoped<ICommentService, CommentManager>();
+builder.Services.AddScoped<ICartDal, EfCoreCartDal>();
+builder.Services.AddScoped<ICartService, CartManager>();
 
 //MVC Mimarisini Tanýmladým.
 builder.Services.AddMvc().SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Latest);
@@ -126,6 +128,11 @@ app.UseEndpoints(endpoints =>
       name: "adminCategories",
       pattern: "admin/categories/{id?}",
       defaults: new { controller = "Admin", action = "EditCategory" });
+
+    endpoints.MapControllerRoute(
+     name: "cart",
+     pattern: "cart",
+     defaults: new { controller = "Cart", action = "Index" });
 });
 
 SeedIdentity.Seed(userManager, roleManager, app.Configuration).Wait();

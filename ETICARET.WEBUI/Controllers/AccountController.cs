@@ -1,4 +1,5 @@
-﻿using ETICARET.WEBUI.EmailServices;
+﻿using ETICARET.BLL.Abstract;
+using ETICARET.WEBUI.EmailServices;
 using ETICARET.WEBUI.Identity;
 using ETICARET.WEBUI.Models;
 using Microsoft.AspNetCore.Identity;
@@ -13,9 +14,11 @@ namespace ETICARET.WEBUI.Controllers
     {
         private UserManager<ApplicationUser> _userManager;
         private SignInManager<ApplicationUser> _signManager;
+        private ICartService _cartService;
 
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager,ICartService cartService)
         {
+            _cartService = cartService;
             _signManager = signInManager;
             _userManager = userManager;
         }
@@ -126,6 +129,8 @@ namespace ETICARET.WEBUI.Controllers
                 var result = await _userManager.ConfirmEmailAsync(user, token);
                 if (result.Succeeded)
                 {
+                    _cartService.InitializeCart(user.Id);
+
                     TempData["message"] = "Hesabınız Onaylandı";
                     return View();
                 }

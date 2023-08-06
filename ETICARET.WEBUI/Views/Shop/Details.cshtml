@@ -34,42 +34,39 @@
             <h4 class="text-primary mb-3">
                 <i class="fa-solid fa-turkish-lira-sign"></i> @Model.Product.Price
             </h4>
-            <button type="submit" class="btn btn-primary btn-lg">Add To Cart</button>
+            <form asp-controller="Cart" asp-action="AddToCart" method="post">
+                <input type="hidden" name="productId" value="@Model.Product.Id" />
+                <div class="input-group mb-3">
+                    <input type="number" name="quantity" value="1" min="1" step="1" class="form-control" style="width:100px" />
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-outline-primary ml-3">
+                            <i class="fas fa-cart-plus"></i> Add To Cart
+                        </button>
+                    </div>
+                </div>
+
+
+            </form>
         </div>
     </div>
 </div>
 
 <div class="row">
-    <div class="col-md-12">
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Açıklama</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Yorumlar</button>
-            </li>
+    <ul class="nav nav-tabs mt-2" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#comment" type="button" role="tab" aria-controls="home" aria-selected="true">Yorumlar</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#detail" type="button" role="tab" aria-controls="profile" aria-selected="false">Ürün Detay</button>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="comment" role="tabpanel" aria-labelledby="home-tab" data-product-id="@Model.Product.Id" data-url="@Url.Action(action:"ShowProductComment", controller:"Comment", new{id=Model.Product.Id})">
+            @* <partial name="_PartialComments" for="@Model.Comments" />*@
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">@Html.Raw(Model.Product.Description)</div>
 
-        </ul>
-        <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">@Model.Product.Description</div>
-            <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-                @foreach (var item in Model.Comments)
-                {
-                    <div class="d-flex">
-                        <div class="flex-grow-1 ms-12">
-                            <h6 class="col-md-12">John Carter <small class="text-muted">@item.CreateOn.ToString("dddd, dd MM yyyy")</small></h6>
-                            <p>@item.Text</p>
-                        </div>
-                    </div>
-                }
-            </div>
         </div>
     </div>
 </div>
 
-<script>
-    function myFunction(smallImg) {
-        var fullImg = document.getElementById("imageBox");
-        fullImg.src = smallImg.src
-    }
-</script>
+<script src="~/js/comment.js"></script>
